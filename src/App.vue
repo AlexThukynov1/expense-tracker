@@ -1,8 +1,11 @@
 <template>
   <Header/>
   <div class="container">
-    <Balance/>
-    <IncomeExpense/>
+    <Balance :total= "total"/>
+    <IncomeExpense
+      :income="income"
+      :expenses="expenses"
+    />
     <TransactionList
       :transactions="transactions"
     />
@@ -26,10 +29,36 @@ const transactions  = ref([
     {id:1, text: 'Taxi', amount: -9.25},
     {id:2, text: 'Salary', amount: 988},
     {id:3, text: 'YouTube Premiunm', amount: -19.99},
+    {id:4, text: 'Grosery', amount: -24.45},
  ]);
 
+function calc (arr, transaction) {
+  return arr.reduce((acc, transaction) => {
+    return acc + transaction.amount;
+  }, 0)
+  .toFixed(2)
+}
+
  const total = computed(() => {
-  return transactions
+  return calc(transactions.value,transaction)
+ });
+
+ const income = computed(() => {
+  return transactions.value
+  .filter(() => transaction.amount > 0)
+  .reduce((acc, transaction) => {
+    return acc + transaction.amount;
+  }, 0)
+  .toFixed(2)
+ });
+ 
+ const expenses = computed(() => {
+  return transactions.value
+  .filter(() => transaction.amount < 0)
+  .reduce((acc, transaction) => {
+    return acc + transaction.amount;
+  }, 0)
+  .toFixed(2)
  });
 
 </script>
