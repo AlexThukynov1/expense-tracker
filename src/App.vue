@@ -3,7 +3,9 @@
   <div class="container">
     <Balance/>
     <IncomeExpense/>
-    <TransactionList/>
+    <TransactionList
+      :transactions="transactions"
+    />
     <NewTransaction/>
   </div>
 </template>
@@ -17,16 +19,17 @@ import Balance from './components/Balance.vue';
 import TransactionList from './components/TransactionList.vue';
 import IncomeExpense from './components/IncomeExpense.vue';
 import NewTransaction from './components/NewTransaction.vue';
+import { computed, ref } from 'vue';
 
-//  export default {
-//   components: {
-//     Header,
-//     Balance,
-//     TransactionList,
-//     IncomeExpense,
-//   },
-//   setup() {
+const transactions  = ref([
+    {id:0, text: 'Food', amount: -15.45},
+    {id:1, text: 'Taxi', amount: -9.25},
+    {id:2, text: 'Salary', amount: 988},
+    {id:3, text: 'YouTube Premiunm', amount: -19.99},
+ ]);
 
-//   }
-//  }
+ const total = computed(() => {
+  return transactions
+ });
+
 </script>
